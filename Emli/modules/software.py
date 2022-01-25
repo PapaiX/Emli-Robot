@@ -200,6 +200,7 @@ def realmeui(update: Update, context: CallbackContext):
     text += f"\n**System:** `{sys}`"
     text += f"\n**Size:** `{size}`"
     text += f"\n**Date:** `{date}`"
+
     else:
         msg = 'Give me something to fetch, like:\n`/realmeui RMX2061`'
 
