@@ -185,12 +185,13 @@ def realmeui(update: Update, context: CallbackContext):
         else:
             for fw in data:
                 reg = fw['region']
-                branch = fw['branch']
-                method = fw['method']
-                link = fw['link']
-                fname = fw['name']
+                link = fw['download']
+                device = fw['device']
                 version = fw['version']
+                cdn = fw['codename']
+                sys = fw['system']
                 size = fw['size']
+                date = fw['date']
                 btn = reg + ' | ' + version
                 keyboard = [[InlineKeyboardButton(text=btn, url=link)]]
 
