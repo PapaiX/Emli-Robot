@@ -184,7 +184,6 @@ def realmeui(update: Update, context: CallbackContext):
             msg = f"realme ui is not avaliable for {device}"
         else:
             for fw in data:
-        for fw in data:
                 reg = fw['region']
                 branch = fw['branch']
                 method = fw['method']
