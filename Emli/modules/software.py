@@ -184,15 +184,14 @@ def realmeui(update: Update, context: CallbackContext):
             msg = f"realme ui is not avaliable for {device}"
         else:
             for fw in data:
-        reg = fw['region']
-        link = fw['download']
-        device = fw['device']
-        version = fw['version']
-        cdn = fw['codename']
-        sys = fw['system']
-        size = fw['size']
-        date = fw['date']
-        md5 = fw['md5']
+        for fw in data:
+                reg = fw['region']
+                branch = fw['branch']
+                method = fw['method']
+                link = fw['link']
+                fname = fw['name']
+                version = fw['version']
+                size = fw['size']
         btn = fname + ' | ' + branch + ' | ' + method + ' | ' + version + ' | ' + reg + ' | ' + size
                 markup.append([InlineKeyboardButton(text = btn, url = link)])
 
