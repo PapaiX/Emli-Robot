@@ -134,7 +134,6 @@ def miui(update: Update, context: CallbackContext):
         link = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/data/latest.yml"
         yaml_data = load(get(link).content, Loader=Loader)
         data = [i for i in yaml_data if device in i['codename']]
-
         if not data:
             msg = f"Miui is not avaliable for {device}"
         else:
@@ -200,6 +199,7 @@ def realmeui(update: Update, context: CallbackContext):
     text += f"\n**System:** `{sys}`"
     text += f"\n**Size:** `{size}`"
     text += f"\n**Date:** `{date}`"
+
  else:
         msg = 'Give me something to fetch, like:\n`/realmeui RMX2061`'
 
