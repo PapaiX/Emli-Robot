@@ -192,7 +192,7 @@ def realmeui(update: Update, context: CallbackContext):
                 version = fw['version']
                 size = fw['size']
         btn = fname + ' | ' + branch + ' | ' + method + ' | ' + version + ' | ' + reg + ' | ' + size
-                markup.append([InlineKeyboardButton(text = btn, url = link)])
+                markup.append[[InlineKeyboardButton(text=btn, url=link)]]
 
             device = fname.split(" ")
             device.pop()
