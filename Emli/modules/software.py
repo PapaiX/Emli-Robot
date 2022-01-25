@@ -193,14 +193,12 @@ def realmeui(update: Update, context: CallbackContext):
                 date = fw['date']
                 btn = reg + ' | ' + version
                 keyboard = [[InlineKeyboardButton(text=btn, url=link)]]
-
-            text = f"**RealmeUI - Last build for {codename}:**"
-    text += f"\n\n**Device:** `{device}`"
-    text += f"\n**System:** `{sys}`"
-    text += f"\n**Size:** `{size}`"
-    text += f"\n**Date:** `{date}`"
-
- else:
+            device = fname.split(" ")
+            device.pop()
+            device = " ".join(device)
+            msg = f"The latest firmwares for the *{device}* are:"
+    else:
+            
         msg = 'Give me something to fetch, like:\n`/realmeui RMX2061`'
 
     delmsg = message.reply_text(
