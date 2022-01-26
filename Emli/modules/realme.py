@@ -114,4 +114,51 @@ async def specs(bot, update):
         await bot.send_message(chat_id=update.chat.id, text=message)
 
 
+@pbot.on_message(filters.command("specs"))
+async def specs(c: Client, update: Update):
+    if len(update.command) != 2:
+        message = (
+            "Please write your codename or model into it,\ni.e <code>/specs lavender</code> or <code>/specs riva</code>")
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+    device = update.command[1]
+    data = GetDevice(device).get()
+    if data:
+        name = data['name']
+        model = data['model']
+        device = name.lower().replace(' ', '-')
+    else:
+        message = "coudn't find your device, chack device & try!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+    sfw = get(f"https://www.gizmochina.com/product/xiaomi-{device}/")
+    if sfw.status_code == 200:
+        page = BeautifulSoup(sfw.content, 'lxml')
+        message = '<b>Device:</b> Xiaomi {}\n'.format(name)
+        res = page.find_all('tr', {'class': 'mdata-group-val'})
+        res = res[2:]
+        for info in res:
+            title = re.findall(r'<td>.*?</td>', str(info)
+                               )[0].strip().replace('td', 'b')
+            data = re.findall(r'<td>.*?</td>', str(info)
+                              )[-1].strip().replace('td', 'code')
+            message += "• {}: <code>{}</code>\n".format(title, data)
+
+    else:
+        message = "Device specs not found in bot database, make sure this is a Xiaomi device!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+
+    await c.send_message(
+        chat_id=update.chat.id,
+        text=message)
+
+
+
 _mod_name_ = "realme"
