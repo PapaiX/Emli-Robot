@@ -1,6 +1,7 @@
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Integer, func, distinct
+from sqlalchemy import Column, String
+from sqlalchemy.sql.sqltypes import BigInteger
 
 from Emli.modules.sql import BASE, SESSION
 
