@@ -1,7 +1,7 @@
 import threading
 
 from Emli.modules.sql import BASE, SESSION
-from sqlalchemy import Column, Integer, String, UnicodeText, distinct, func
+from sqlalchemy import Column, String, UnicodeText, distinct, func, Integer
 
 
 class StickersFilters(BASE):
