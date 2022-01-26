@@ -168,50 +168,6 @@ def miui(update: Update, context: CallbackContext):
         context.dispatcher.run_async(delete, delmsg, cleartime.time)
 #Don't kang it. Create by shado_hackers in telegram 
 
-def realmeui(update: Update, context: CallbackContext):
-    message = update.effective_message
-    chat = update.effective_chat
-    device = message.text[len("/realmeui ") :]
-    markup = []
-
-    if device:
-        link = "https://raw.githubusercontent.com/RealmeUpdater/realme-updates-tracker/master/data/latest.yml"
-        yaml_data = load(get(link).content, Loader=Loader)
-        data = [i for i in yaml_data if device in i['codename']]
-
-        if not data:
-            msg = f"realme ui is not avaliable for {device}"
-        else:
-            for fw in data:
-                reg = fw['region']
-                link = fw['download']
-                device = fw['device']
-                version = fw['version']
-                cdn = fw['codename']
-                sys = fw['system']
-                size = fw['size']
-                date = fw['date']
-                btn = reg + ' | ' + version
-                keyboard = [[InlineKeyboardButton(text=btn, url=link)]]
-            device = fname.split(" ")
-            device.pop()
-            device = " ".join(device)
-            msg = f"The latest firmwares for the *{device}* are:"
-    else:
-            
-        msg = 'Give me something to fetch, like:\n`/realmeui RMX2061`'
-
-    delmsg = message.reply_text(
-        text = msg,
-        reply_markup = InlineKeyboardMarkup(markup),
-        parse_mode = ParseMode.MARKDOWN,
-        disable_web_page_preview = True,
-    )
-
-    cleartime = get_clearcmd(chat.id, "realmeui")
-
-    if cleartime:
-        context.dispatcher.run_async(delete, delmsg, cleartime.time)
 
 
 
@@ -221,16 +177,15 @@ def realmeui(update: Update, context: CallbackContext):
 GETFW_HANDLER = CommandHandler("getfw", getfw, run_async=True)
 CHECKFW_HANDLER = CommandHandler("checkfw", checkfw, run_async=True)
 MIUI_HANDLER = CommandHandler("miui", miui, run_async=True)
-REALMEUI_HANDLER  = CommandHandler("realmeui", realmeui, run_async=True)
 
 
 
 
 dispatcher.add_handler(GETFW_HANDLER)
 dispatcher.add_handler(CHECKFW_HANDLER)
-dispatcher.add_handler(REALMEUI_HANDLER)
+
 dispatcher.add_handler(MIUI_HANDLER)
 
 __mod_name__ = "software"
-__command_list__ = [ "checkfw", "getfw", "miui", "realmeui"]
-__handlers__ = [GETFW_HANDLER, CHECKFW_HANDLER,  MIUI_HANDLER, REALMEUI_HANDLER]
+__command_list__ = [ "checkfw", "getfw", "miui"]
+__handlers__ = [GETFW_HANDLER, CHECKFW_HANDLER,  MIUI_HANDLER]
