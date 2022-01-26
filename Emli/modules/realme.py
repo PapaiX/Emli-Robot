@@ -111,3 +111,5 @@ async def samspecs(c: Client, update: Update):
     await c.send_message(
         chat_id=update.chat.id,
         text=message)
+
+_mod_name_ = "realme"
