@@ -23,12 +23,12 @@ from yaml import Loader, load
 # None of the code is taken from the bot itself, to avoid confusion.
 # Please don't remove these comment, show respect to module contributors.
 
-err_not_found: Couldn't find any results matching your query.
-err_api: Couldn't reach the API.
-err_example_device: Why are you trying to get the example device?
-err_json: Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P
-btn_dl: Click here to Download
-cmd_example: Please type your device **codename**!\nFor example, `/{} tiss
+err_not_found: "Couldn't find any results matching your query."
+err_api: "Couldn't reach the API."
+err_example_device: "Why are you trying to get the example device?"
+err_json: "Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too"
+btn_dl: "Click here to Download"
+cmd_example: "Please type your device **codename**!\nFor example, `/{} lavender"
 maintainer: "**Maintainer:** {}\n"
 android_version: "**Android Version:** `{}`\n"
 download: "**Download:** [{}]({})\n"
