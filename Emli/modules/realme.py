@@ -1,6 +1,6 @@
 import re
 from requests import get
-
+from hurry.filesize import size as sizee
 import rapidjson as json
 from bs4 import BeautifulSoup
 from Emli import pbot
@@ -22,6 +22,18 @@ from yaml import Loader, load
 # This module was inspired by Android Helper Bot by Vachounet.
 # None of the code is taken from the bot itself, to avoid confusion.
 # Please don't remove these comment, show respect to module contributors.
+
+err_not_found: Couldn't find any results matching your query.
+err_api: Couldn't reach the API.
+err_example_device: Why are you trying to get the example device?
+err_json: Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P
+btn_dl: Click here to Download
+cmd_example: Please type your device **codename**!\nFor example, `/{} tiss
+maintainer: "**Maintainer:** {}\n"
+android_version: "**Android Version:** `{}`\n"
+download: "**Download:** [{}]({})\n"
+build_size: "**Build Size:** `{}`\n"
+
 
 
 REALME_FIRM = "https://raw.githubusercontent.com/RealmeUpdater/realme-updates-tracker/master/data/latest.yml"
@@ -158,6 +170,76 @@ async def specs(c: Client, update: Update):
     await c.send_message(
         chat_id=update.chat.id,
         text=message)
+
+pbot.on_message(filters.command(["evo", "evox"]))
+async def evo(c: Client, update: Update):
+
+    chat_id = update.chat.id,
+    try:
+        device = update.command[1]
+    except Exception:
+        device = ''
+
+    if device == "example":
+        reply_text = (chat_id, "err_example_device")
+        await update.reply_text(reply_text, disable_web_page_preview=True)
+        return
+
+    if device == "x00t":
+        device = "X00T"
+
+    if device == "x01bd":
+        device = "X01BD"
+
+    if device == '':
+        reply_text = (chat_id, "cmd_example").format("evo")
+        await update.reply_text(reply_text, disable_web_page_preview=True)
+        return
+
+    fetch = get(
+        f'https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/builds/{device}.json'
+    )
+
+    if fetch.status_code in [500, 504, 505]:
+        await update.reply_text(
+            "Emli have been trying to connect to Github User Content, It seem like Github User Content is down"
+        )
+        return
+
+    if fetch.status_code == 200:
+        try:
+            usr = json.loads(fetch.content)
+            filename = usr['filename']
+            url = usr['url']
+            version = usr['version']
+            maintainer = usr['maintainer']
+            maintainer_url = usr['telegram_username']
+            size_a = usr['size']
+            size_b = sizee(int(size_a))
+
+            reply_text = (chat_id, "download").format(filename, url)
+            reply_text += (chat_id, "build_size").format(size_b)
+            reply_text += (chat_id, "android_version").format(version)
+            reply_text += (chat_id, "maintainer").format(
+                f"[{maintainer}](https://t.me/{maintainer_url})")
+
+            btn = tld(chat_id, "btn_dl")
+            keyboard = [[InlineKeyboardButton(
+                text=btn, url=url)]]
+            await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
+            return
+
+        except ValueError:
+            reply_text = (chat_id, "err_json")
+            await update.reply_text(reply_text, disable_web_page_preview=True)
+            return
+
+    elif fetch.status_code == 404:
+        reply_text = (chat_id, "err_not_found")
+        await update.reply_text(reply_text, disable_web_page_preview=True)
+        return
+
+
 
 
 
